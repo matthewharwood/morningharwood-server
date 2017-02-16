@@ -5,7 +5,8 @@ import (
 	"github.com/labstack/echo"
 	"github.com/matthewharwood/morningharwood-server/src/api"
 	"github.com/labstack/echo/middleware"
-	//"flag"
+	"flag"
+	"fmt"
 )
 
 func todoistEndpoint(c echo.Context) error {
@@ -19,8 +20,9 @@ type (
 )
 
 func main() {
-	//port := flag.String("port", ":8000", "server port")
-	// Hosts
+	// POINTERS
+	port := flag.String("port", ":8080", "server port")
+	domain := flag.String("domain", "localhost", "server domain")
 	hosts := make(map[string]*Host)
 
 
@@ -32,7 +34,7 @@ func main() {
 	store.Use(middleware.Logger())
 	store.Use(middleware.Recover())
 
-	hosts["store.localhost:1323"] = &Host{store}
+	hosts[fmt.Sprintf("store.%v%s",*domain, *port)] = &Host{store}
 
 	store.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "store")
@@ -51,7 +53,7 @@ func main() {
 	site.Use(middleware.Logger())
 	site.Use(middleware.Recover())
 
-	hosts["localhost:1323"] = &Host{site}
+	hosts[fmt.Sprintf("%v%s", *domain, *port)] = &Host{site}
 
 
 	//-----
@@ -76,5 +78,5 @@ func main() {
 
 		return
 	})
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Logger.Fatal(e.Start(*port))
 }
