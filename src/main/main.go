@@ -45,11 +45,12 @@ func main() {
 	//---------
 
 	site := echo.New()
-	site.Static("/", "morningharwood-client/assets/images")
+	//site.Static("/", "morningharwood-client/client/dist/assets")
+	site.Static("/", "morningharwood-client/client/dist/")
 	site.File("/favicon.ico", "morningharwood-client/assets/images/favicon/favicon.ico")
 	site.File("/favicon-16x16.png", "morningharwood-client/assets/images/favicon/favicon-16x16.png")
 	site.File("/favicon-32x32.png", "morningharwood-client/assets/images/favicon/favicon-32x32.png")
-	site.File("/", "morningharwood-client/index.html")
+	site.File("/", "morningharwood-client/client/dist/index.html")
 	site.Use(middleware.Logger())
 	site.Use(middleware.Recover())
 
