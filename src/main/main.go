@@ -18,13 +18,16 @@ type (
 		Echo *echo.Echo
 	}
 )
-
+/**
+ * <directory_to_binary> -port=:8080 -domain=104.198.5.254 -dir=go/src/github.com/matthewharwood/
+ */
 func main() {
-	// POINTERS
+	// flags.
 	port := flag.String("port", ":8080", "server port")
 	domain := flag.String("domain", "localhost", "server domain")
+	dir := flag.String("static", "go/src/github.com/matthewharwood/morningharwood-client/dist", "static directory");
 	hosts := make(map[string]*Host)
-
+	flag.Parse()
 
 	//------
 	// store
@@ -45,11 +48,11 @@ func main() {
 	//---------
 
 	site := echo.New()
-	site.Static("/", "morningharwood-client/assets/images")
-	site.File("/favicon.ico", "morningharwood-client/assets/images/favicon/favicon.ico")
-	site.File("/favicon-16x16.png", "morningharwood-client/assets/images/favicon/favicon-16x16.png")
-	site.File("/favicon-32x32.png", "morningharwood-client/assets/images/favicon/favicon-32x32.png")
-	site.File("/", "morningharwood-client/index.html")
+	site.Static("/", fmt.Sprintf("%v", *dir))
+	//site.File("/favicon.ico", "morningharwood-client/assets/images/favicon/favicon.ico")
+	//site.File("/favicon-16x16.png", "morningharwood-client/assets/images/favicon/favicon-16x16.png")
+	//site.File("/favicon-32x32.png", "morningharwood-client/assets/images/favicon/favicon-32x32.png")
+	site.File("/", fmt.Sprintf("%v/index.thml", *dir))
 	site.Use(middleware.Logger())
 	site.Use(middleware.Recover())
 
