@@ -25,7 +25,7 @@ func main() {
 	// flags.
 	port := flag.String("port", ":8080", "server port")
 	domain := flag.String("domain", "localhost", "server domain")
-	dir := flag.String("static", "go/src/github.com/matthewharwood/morningharwood-client/dist", "static directory");
+	dir := flag.String("static", "go/src/github.com/matthewharwood/morningharwood-client/client/dist", "static directory");
 	hosts := make(map[string]*Host)
 	flag.Parse()
 
@@ -49,10 +49,8 @@ func main() {
 
 	site := echo.New()
 	site.Static("/", fmt.Sprintf("%v", *dir))
-	//site.File("/favicon.ico", "morningharwood-client/assets/images/favicon/favicon.ico")
-	//site.File("/favicon-16x16.png", "morningharwood-client/assets/images/favicon/favicon-16x16.png")
-	//site.File("/favicon-32x32.png", "morningharwood-client/assets/images/favicon/favicon-32x32.png")
-	site.File("/", fmt.Sprintf("%v/index.thml", *dir))
+	site.File("/", "go/src/github.com/matthewharwood/morningharwood-client/client/dist/index.html")
+	site.File("/menu", "go/src/github.com/matthewharwood/morningharwood-client/client/dist/index.html")
 	site.Use(middleware.Logger())
 	site.Use(middleware.Recover())
 
