@@ -51,6 +51,7 @@ func main() {
 	site.Static("/", fmt.Sprintf("%v", *dir))
 	site.File("/", "go/src/github.com/matthewharwood/morningharwood-client/client/dist/index.html")
 	site.File("/menu", "go/src/github.com/matthewharwood/morningharwood-client/client/dist/index.html")
+	site.File("/work", "go/src/github.com/matthewharwood/morningharwood-client/client/dist/index.html")
 	site.Use(middleware.Logger())
 	site.Use(middleware.Recover())
 
